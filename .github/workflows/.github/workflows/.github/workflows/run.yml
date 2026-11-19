@@ -1,0 +1,27 @@
+name: OS Lab 1 - Task 2
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run-program:
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      - name: Set up C++ compiler
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Compile program
+        shell: pwsh
+        run: |
+          cl /nologo /EHsc /std:c++17 /Fe:philosophers.exe main\main.cpp
+
+      - name: Run program
+        shell: pwsh
+        run: |
+          "5`n3`n" | .\philosophers.exe
